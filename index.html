@@ -80,10 +80,10 @@
                 var lastTop = this.div.offsetTop;
 
                 if (lastLeft <= 0 || lastLeft >= parent.offsetWidth - this.div.offsetWidth) {
-                    this.speedX *= -1.01;
+                    this.speedX *= -1.0001;
                 }
                 if (lastTop <= 0 || lastTop >= parent.offsetHeight - this.div.offsetHeight) {
-                    this.speedY *= -1.01;
+                    this.speedY *= -1.0001;
                 }
 
                 var currentLeft = lastLeft + this.speedX;
