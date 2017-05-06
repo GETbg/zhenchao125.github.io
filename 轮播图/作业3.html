@@ -122,11 +122,13 @@
         if (currentShow == imgDiv.length){
             currentShow = 0;
         }
+        
         //把所有的图片和指示器设置为初始状态
         for (var i = 0; i < imgDiv.length; i++){
             imgDiv[i].style.zIndex = 0;
             lis[i].style.backgroundColor = "white";
         }
+        
         //设置要显示的图片的zindex为1，指示器背景红色
         imgDiv[currentShow].style.zIndex = 1;
         lis[currentShow].style.backgroundColor = "red";
