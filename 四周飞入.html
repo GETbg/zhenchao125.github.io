@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            margin: 100px auto;
+            position: relative;
+        }
+        
+        p {
+            text-align: center;
+            width: 150px;
+            display: none;
+            position: absolute;
+            left: -100px;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p>我是要飞入的文字</p>
+</div>
+<script>
+    var div = document.querySelector("div");
+    var p = document.querySelector("p");
+    div.onmouseenter = function (e){
+        p.style.display = "block";
+        
+        var endLeft = (div.offsetWidth - p.offsetWidth) / 2;
+        var endTop = (div.offsetHeight - p.offsetHeight) / 2;
+        
+        //
+        var left = e.offsetX;
+        var top = e.offsetY;
+        var right = div.offsetWidth - e.offsetX;
+        var bottom = div.offsetHeight - e.offsetY;
+        var min = Math.min(left, top, right, bottom);  //距离四个边哪个值最小就是就是从哪个边进入
+        switch (min){
+            case left:
+                p.style.left = "-200px"
+                p.style.top = endTop + "px"
+                var id = setInterval(function (){
+                    if (p.offsetLeft >= endLeft){
+                        clearInterval(id);
+                        return;
+                    }
+                    p.style.left = p.offsetLeft + 10 + "px";
+                }, 20)
+                break;
+            case top:
+                p.style.left = endLeft + "px";
+                p.style.top = "-200px";
+                var id = setInterval(function (){
+                    if (p.offsetTop >= endTop){
+                        clearInterval(id)
+                        return;
+                    }
+                    p.style.top = p.offsetTop + 10 + "px";
+                }, 20)
+                break;
+            case right:
+                p.style.left = div.offsetWidth + 200 + "px";
+                p.style.top = endTop + "px";
+                var id = setInterval(function (){
+                    if (p.offsetLeft <= endLeft){
+                        clearInterval(id)
+                        return;
+                    }
+                    p.style.left = p.offsetLeft - 10 + "px";
+                }, 20)
+                break;
+            case bottom:
+                p.style.left = endLeft + "px";
+                p.style.top = div.offsetHeight + 200 + "px";
+                var id = setInterval(function (){
+                    if (p.offsetTop <= endTop){
+                        clearInterval(id)
+                        return;
+                    }
+                    p.style.top = p.offsetTop - 10 + "px";
+                }, 20)
+                break;
+        }
+    }
+</script>
+</body>
+</html>
