@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>调戏小美</title>
+<style>
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+#chat_robot {
+    width: 1000px;
+    height: 500px;
+    
+    border: 1px solid #666666;
+    border-radius: 20px;
+    
+    margin: 30px auto;
+}
+
+#chat_robot > .chat_content {
+    width: 98%;
+    height: 400px;
+    margin: 0 auto;
+    padding: 10px;
+    overflow: scroll;
+    
+}
+
+#chat_robot > .chat_content > li {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#chat_robot > .chat_content > li > img {
+    display: block;
+    border-radius: 50%;
+}
+
+#chat_robot > .chat_content > li > p {
+    width: 100%;
+    background-color: lightgray;
+}
+
+#chat_robot > div {
+    width: 98%;
+    height: 98px;
+    margin: 0 auto;
+}
+
+#chat_robot > div > input {
+    display: block;
+    width: 100%;
+    height: 50px;
+    font-size: 30px;
+}
+
+#chat_robot > div > button {
+    width: 100%;
+    height: 40px;
+    background-color: green;
+    font-size: 30px;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+.hide {
+    display: none;
+}
+</style>
+
+</head>
+<body>
+<div id="chat_robot">
+    <ul class="chat_content">
+        <li class="robot_chat hide">
+            <img src="robot.jpg" width="50" height="50" alt="">
+            <p>我是小美</p>
+        </li>
+        <li class="my_chat hide">
+            <img src="my.png" width="50" height="50" alt="">
+            <p>我是好人</p>
+        </li>
+    </ul>
+    <div>
+        <input type="text">
+        <button class="send">发送</button>
+    </div>
+</div>
+<script type="text/javascript" src="my_ajax.js"></script>
+<script>
+var chat_content = document.querySelector(".chat_content");
+var robot_li = document.querySelector(".robot_chat");
+var my_li = document.querySelector(".my_chat");
+
+var input = document.querySelector("input");
+var sendBtn = document.querySelector("button");
+
+sendBtn.onclick = function (){
+    var msg = input.value;
+    input.value = "";
+    var my_li_clone = my_li.cloneNode(true);
+    my_li_clone.classList.remove("hide");
+    my_li_clone.querySelector("p").innerHTML = msg;
+    chat_content.appendChild(my_li_clone);
+    scroll()
+    my_ajax.post(
+        "http://www.tuling123.com/openapi/api",
+        "key=844ba3d5d9984fb1989a93a117fde1be&info=" + msg + "&userid=123456",
+        function (content){
+            var obj = JSON.parse(content);
+            var text = obj.text + "<br>"+ (obj.url ? "<a target='_blank' href="+ obj.url +">你想看的图片</a>": "");
+            var robot_li_clone = robot_li.cloneNode(true);
+            robot_li_clone.classList.remove("hide");
+            robot_li_clone.querySelector("p").innerHTML = text;
+            chat_content.appendChild(robot_li_clone);
+            scroll()
+        }
+    )
+};
+
+document.onkeydown = function (e){
+   if(e.keyCode == 13){
+       sendBtn.onclick();
+   }
+}
+function scroll(){
+    var id = setInterval(function (){
+        var pre = chat_content.scrollTop;
+        chat_content.scrollTop += 4;
+        
+        if (pre == chat_content.scrollTop){
+            clearInterval(id);
+        }
+    }, 20);
+}
+
+
+</script>
+</body>
+</html>
