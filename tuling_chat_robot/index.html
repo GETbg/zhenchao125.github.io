@@ -108,7 +108,7 @@ sendBtn.onclick = function (){
     chat_content.appendChild(my_li_clone);
     scroll()
     my_ajax.post(
-        "http://www.tuling123.com/openapi/api",
+        "//www.tuling123.com/openapi/api",
         "key=844ba3d5d9984fb1989a93a117fde1be&info=" + msg + "&userid=123456",
         function (content){
             var obj = JSON.parse(content);
