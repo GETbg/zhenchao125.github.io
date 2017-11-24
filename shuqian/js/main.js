@@ -121,7 +121,7 @@ $(function() {
                         }
                         $(".clock").html(downTimerNum);
                     }
-                }, 800);
+                }, 80);
                 touch.on(".qian_wrap", "touchstart", function(e) {
                     e.preventDefault();
                 });
